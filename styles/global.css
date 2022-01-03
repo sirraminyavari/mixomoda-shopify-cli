@@ -1,0 +1,11 @@
+body {
+    margin: 0 !important;
+    font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+}
+
+#__next {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-flow: column;
+}
