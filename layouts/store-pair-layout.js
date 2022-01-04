@@ -1,11 +1,16 @@
 import { useState, useEffect } from "react";
-import { TextField, Button } from "@mui/material";
+import { Button } from "@mui/material";
+import Input from "../components/Input";
 import { MainWrapper, ImageContainer, ContentContainer, InputWrapper, ButtonWrapper } from "../styles/store-pair.styles";
 import LoadingIconFlat from "../icons/LoadingIconFlat";
+import { random } from "../util/utillities";
 
 const StorePairLayout = ({ codeConfirmed }) => {
     const [code, setCode] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [shake, setShake] = useState(0);
+    const [error, setError] = useState('');
+    const shaking = usePeriod(shake, {}) && !!error;
 
     const verifyCode = () => {
         if (!code) return;
@@ -15,8 +20,10 @@ const StorePairLayout = ({ codeConfirmed }) => {
         fetch("../../api/store_pair")
             .then(res => {
                 setLoading(false);
-                let result = res.json();
-                console.log(result, "ramin");
+                let result = res?.json();
+                let apiKey = result?.value?.publicApiKey;
+                codeConfirmed(apiKey, !!apiKey);
+                if (!apiKey) setShake(random());
             })
             .then(res => console.log(res, "ramin"));
     };
@@ -24,14 +31,18 @@ const StorePairLayout = ({ codeConfirmed }) => {
     return (
         <MainWrapper>
             <ContentContainer>
-                <InputWrapper>
-                    <TextField 
-                        variant="outlined" 
+                ramin
+                <div
+                    className={ shaking ? ' shake ' : ' ' } 
+                    style={{
+                        flex: "0 0 auto",
+                        marginBottom: "2rem"
+                    }}>
+                    <Input 
                         label="Please enter your pairing code" 
-                        style={{ width: "100%" }}
-                        onKeyUp={ (e) => setCode(e.target.value) }
-                    ></TextField>
-                </InputWrapper>
+                        getValue={ (value) => setCode(value) }
+                    ></Input>
+                </div>
                 <ButtonWrapper>
                     <Button 
                         variant="contained" 

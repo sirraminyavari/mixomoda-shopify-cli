@@ -1,7 +1,7 @@
 import { useState } from "react";
-import MainLayout from "../components/main-layout";
-import ProductsLayout from "../components/products-layout";
-import StorePairLayout from "../components/store-pair-layout";
+import MainLayout from "../layout/main-layout";
+import ProductsLayout from "../layout/products-layout";
+import StorePairLayout from "../layout/store-pair-layout";
 
 export default function Index() {
   const [pairCode, setPairCode] = useState(null);
