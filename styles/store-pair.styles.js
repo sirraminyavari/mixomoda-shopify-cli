@@ -14,8 +14,8 @@ export const ImageContainer = styled.div`
     align-items: center;
     justify-content: center;
     text-align: center;
-    width: 35vw;
-    padding-inline-start: calc(10vw + 2rem);
+    width: 30vw;
+    padding-inline-start: calc(6vw);
 `;
 
 export const ContentContainer = styled.div`
@@ -24,7 +24,7 @@ export const ContentContainer = styled.div`
     flex-flow: column;
     justify-content: center;
     text-align: center;
-    padding-inline-end: 2rem;
+    padding-inline-end: ${ props => props.contentOnly ? 0 : "2rem" };
 `;
 
 export const ButtonWrapper = styled.div`

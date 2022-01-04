@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import Input from "../components/Input";
 import { MainWrapper, ImageContainer, ContentContainer, InputWrapper, ButtonWrapper } from "../styles/store-pair.styles";
 import LoadingIconFlat from "../icons/LoadingIconFlat";
 import { random } from "../util/utillities";
+import DimensionHelper from "../util/dimensionHelper";
+import { isDynamicRoute } from "next/dist/shared/lib/router/utils";
 
 const StorePairLayout = ({ codeConfirmed }) => {
     const [code, setCode] = useState(null);
@@ -11,9 +13,17 @@ const StorePairLayout = ({ codeConfirmed }) => {
     const [error, setError] = useState('');
     const [shake, setShake] = useState(0);
 
+    useEffect(() => setError(''), [code]);
+
     const verifyCode = () => {
         if (!code) return;
         
+        if (!/^[0-9A-F]{8}[-](?:[0-9A-F]{4}[-]){3}[0-9A-F]{12}$/ig.test(code)) {
+            setError("Pairing code must match 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'");
+            setShake(random());
+            return;
+        }
+
         setLoading(true);
         
         fetch("../../api/store_pair", {
@@ -42,10 +52,13 @@ const StorePairLayout = ({ codeConfirmed }) => {
             })
             .then(res => console.log(res, "store pair error"));
     };
+
+    const { isMobile, isTablet } = DimensionHelper() || {};
+    const contentOnly = isTablet;
     
     return (
         <MainWrapper>
-            <ContentContainer>
+            <ContentContainer contentOnlye={ isTablet }>
                 <Input 
                     label="Please enter your pairing code" 
                     shake={ shake }
@@ -67,16 +80,18 @@ const StorePairLayout = ({ codeConfirmed }) => {
                     </Button>
                 </ButtonWrapper>
             </ContentContainer>
-            <ImageContainer>
-                <div>
-                    <img src="../image/top-banner.jpg"
-                        style={{ width: "100%" }}
-                    ></img>
-                </div>
-                <div style={{ color: "rgb(100,100,100)", fontFamily: "comic sans ms", fontSize: "0.8rem", paddingTop: "1rem" }}>
-                    Fashion is all about the individual characteristics and preferences
-                </div>
-            </ImageContainer>
+            {!contentOnly &&
+                <ImageContainer>
+                    <div>
+                        <img src="../image/top-banner.jpg"
+                            style={{ width: "100%" }}
+                        ></img>
+                    </div>
+                    <div style={{ color: "rgb(100,100,100)", fontFamily: "comic sans ms", fontSize: "0.8rem", paddingTop: "1rem" }}>
+                        Fashion is all about the individual characteristics and preferences
+                    </div>
+                </ImageContainer>
+            }
         </MainWrapper>
     );
 };

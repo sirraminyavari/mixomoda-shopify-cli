@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
-import { TopBar, Content, Footer, FooterSide, FooterCenter, IconWrapper } from '../styles/main-layout.styles';
+import { TopBar, Content, Footer, FooterSide, FooterCenter, IconWrapper, ProfileImage } from '../styles/main-layout.styles';
 import LinkedInIcon from '../icons/LinkedIn';
 import TwitterIcon from '../icons/Twitter';
 import InstagramIcon from '../icons/Instagram';
+import DownloadIcon from '../icons/Download';
+import { Button } from '@mui/material';
 
 const MainLayout = ({ children }) => {
     /*
@@ -47,6 +49,27 @@ const MainLayout = ({ children }) => {
             </FooterSide>
             <FooterCenter>
                 <div style={{ flex: "1 1 auto" }}></div>
+                <div 
+                    style={{ 
+                        flex: "0 0 auto", 
+                        display: "flex", 
+                        flexFlow: "row", 
+                        alignItems: "center",
+                        justifyContent: "center",
+                        paddingBottom: "1rem" 
+                    }}>
+                    <div style={{ flex: "0 0 auto;" }}><ProfileImage /></div>
+                    <div style={{ flex: "0 0 auto;", marginInlineStart: "0.5rem" }}>Ramin Yavari</div>
+                    <div style={{ flex: "0 0 auto;", marginInlineStart: "1.5rem" }}>
+                        <Button 
+                            variant="outlined" 
+                            style={{ fontSize: "0.7rem" }}
+                            onClick={ () => window.open("../../documents/ramin_yavari_cv.pdf") }>
+                            CV
+                            <DownloadIcon style={{ marginInlineStart: "0.5rem" }} />
+                        </Button>
+                    </div>
+                </div>
                 <div style={{ flex: "0 0 auto" }}>
                     <IconWrapper onClick={ () => window.open("https://linkedin.com/in/ramin-yavari/") }>
                         <LinkedInIcon style={{ width: "1.2rem", height: "1.2rem" }} />
