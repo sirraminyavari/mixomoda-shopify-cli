@@ -9,7 +9,7 @@ export const Content = styled.div`
     flex: 1 1 auto;
     display: flex;
     flex-flow: column;
-    padding: 0 10vw;
+    padding: 2rem 10vw;
 `;
 
 export const Footer = styled.footer`

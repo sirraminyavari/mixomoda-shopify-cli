@@ -5,7 +5,6 @@ import { MainWrapper, ImageContainer, ContentContainer, InputWrapper, ButtonWrap
 import LoadingIconFlat from "../icons/LoadingIconFlat";
 import { random } from "../util/utillities";
 import DimensionHelper from "../util/dimensionHelper";
-import { isDynamicRoute } from "next/dist/shared/lib/router/utils";
 
 const StorePairLayout = ({ codeConfirmed }) => {
     const [code, setCode] = useState(null);
@@ -58,7 +57,7 @@ const StorePairLayout = ({ codeConfirmed }) => {
     
     return (
         <MainWrapper>
-            <ContentContainer contentOnlye={ isTablet }>
+            <ContentContainer contentOnly={ contentOnly }>
                 <Input 
                     label="Please enter your pairing code" 
                     shake={ shake }

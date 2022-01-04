@@ -6,16 +6,9 @@ import TwitterIcon from '../icons/Twitter';
 import InstagramIcon from '../icons/Instagram';
 import DownloadIcon from '../icons/Download';
 import { Button } from '@mui/material';
+import DimensionHelper from "../util/dimensionHelper";
 
 const MainLayout = ({ children }) => {
-    /*
-    useEffect(() => {
-        fetch("../../api/store_pair")
-        .then(res => res.json())
-        .then(res => console.log(res, "ramin"));
-    }, []);
-    */
-
   useEffect(() => {
     fetch("../../api/products")
       .then(res => res.json())
@@ -24,6 +17,8 @@ const MainLayout = ({ children }) => {
 
   const logoUrlBlack = "https://images.squarespace-cdn.com/content/v1/5ee6be593dc49f4def5d0ef1/5c7f6499-aca2-4472-b525-2dfb9d224006/logo-black.png?format=1500w";
   const logoUrlWhite = "https://images.squarespace-cdn.com/content/v1/5ee6be593dc49f4def5d0ef1/794aee92-3ddc-4e73-9f18-1abba2cc66df/logo-white.png?format=500w";
+
+  const { isMobile, isTablet } = DimensionHelper() || {};
 
   return (
     <>
@@ -56,14 +51,21 @@ const MainLayout = ({ children }) => {
                         flexFlow: "row", 
                         alignItems: "center",
                         justifyContent: "center",
-                        paddingBottom: "1rem" 
+                        paddingBottom: "1.5rem" 
                     }}>
-                    <div style={{ flex: "0 0 auto;" }}><ProfileImage /></div>
+                    <div 
+                        style={{ 
+                            flex: "0 0 auto;",  
+                            display: "flex", 
+                            flexFlow: "column", 
+                            alignItems: "center", 
+                            justifyContent: "center"
+                        }}><ProfileImage /></div>
                     <div style={{ flex: "0 0 auto;", marginInlineStart: "0.5rem" }}>Ramin Yavari</div>
-                    <div style={{ flex: "0 0 auto;", marginInlineStart: "1.5rem" }}>
+                    <div style={{ flex: "0 0 auto;", marginInlineStart: "1rem" }}>
                         <Button 
                             variant="outlined" 
-                            style={{ fontSize: "0.7rem" }}
+                            style={{ fontSize: "0.7rem", padding: "0.2rem 0.5rem" }}
                             onClick={ () => window.open("../../documents/ramin_yavari_cv.pdf") }>
                             CV
                             <DownloadIcon style={{ marginInlineStart: "0.5rem" }} />
@@ -82,14 +84,16 @@ const MainLayout = ({ children }) => {
                     </IconWrapper>
                 </div>
             </FooterCenter>
-            <FooterSide>
-                <div style={{ flex: "1 1 auto" }}></div>
-                <div style={{ flex: "0 0 auto" }}>
-                    <div>Email: hello@mixomoda.com</div>
-                    <div>Phone: 001 858 876 2058</div>
-                    <div>3525 Del Mar Heights RD #1955 San Diego CA, 92130 USA</div>
-                </div>
-            </FooterSide>
+            {!isTablet && !isMobile &&
+                <FooterSide>
+                    <div style={{ flex: "1 1 auto" }}></div>
+                    <div style={{ flex: "0 0 auto" }}>
+                        <div>Email: hello@mixomoda.com</div>
+                        <div>Phone: 001 858 876 2058</div>
+                        <div>3525 Del Mar Heights RD #1955 San Diego CA, 92130 USA</div>
+                    </div>
+                </FooterSide>
+            }
         </Footer>
     </>
   );

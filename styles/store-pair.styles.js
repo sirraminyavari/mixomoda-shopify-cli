@@ -4,7 +4,6 @@ export const MainWrapper = styled.div`
     flex: 1 1 auto;
     display: flex;
     flex-flow: row;
-    padding: 2rem 0;
 `;
 
 export const ImageContainer = styled.div`
@@ -24,7 +23,7 @@ export const ContentContainer = styled.div`
     flex-flow: column;
     justify-content: center;
     text-align: center;
-    padding-inline-end: ${ props => props.contentOnly ? 0 : "2rem" };
+    padding-inline-end: ${ props => props.contentOnly ? "0" : "2rem" };
 `;
 
 export const ButtonWrapper = styled.div`
