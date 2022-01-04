@@ -1,14 +1,16 @@
 import { TextField } from "@mui/material";
-import usePeriod from "../hooks/usePeriod";
+import styled from 'styled-components';
 
-const Input = ({ label, animated, getValue, error }) => {
+const Input = ({ label, animated, getValue, $error }) => {
     return (
         <TextField 
             variant="outlined" 
-            label={ label }
+            error
+            label={ "ramin" }
             style={{ width: "100%" }}
             onKeyUp={ (e) => getValue(e.target.value) }
-        ></TextField>
+            helperText="Incorrect entry."
+        />
     );
 };
 

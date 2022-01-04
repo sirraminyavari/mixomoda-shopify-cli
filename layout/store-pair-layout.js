@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@mui/material";
 import Input from "../components/Input";
 import { MainWrapper, ImageContainer, ContentContainer, InputWrapper, ButtonWrapper } from "../styles/store-pair.styles";
@@ -35,9 +35,10 @@ const StorePairLayout = ({ codeConfirmed }) => {
     return (
         <MainWrapper>
             <ContentContainer>
-                <InputWrapper className={ shaking ? ' shake ' : ' ramin ' }>
+                <InputWrapper className={ shaking ? ' shake ' : '' }>
                     <Input 
                         label="Please enter your pairing code" 
+                        $error={ error }
                         getValue={ (value) => setCode(value) }
                     ></Input>
                 </InputWrapper>
