@@ -5,11 +5,11 @@ const Input = ({ label, animated, getValue, $error }) => {
     return (
         <TextField 
             variant="outlined" 
-            error
-            label={ "ramin" }
+            error={ !!$error }
+            label={ label }
             style={{ width: "100%" }}
             onKeyUp={ (e) => getValue(e.target.value) }
-            helperText="Incorrect entry."
+            helperText={ $error }
         />
     );
 };
