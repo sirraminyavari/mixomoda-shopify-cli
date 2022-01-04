@@ -27,12 +27,8 @@ export const ContentContainer = styled.div`
     padding-inline-end: 2rem;
 `;
 
-export const InputWrapper = styled.div.attrs(props => ({ className: props.className }))`
-    flex: 0 0 auto;
-    margin-bottom: 2rem;
-`;
-
 export const ButtonWrapper = styled.div`
     flex: 0 0 auto;
     text-align: center;
+    margin-top: 1rem;
 `;

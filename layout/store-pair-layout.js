@@ -4,44 +4,54 @@ import Input from "../components/Input";
 import { MainWrapper, ImageContainer, ContentContainer, InputWrapper, ButtonWrapper } from "../styles/store-pair.styles";
 import LoadingIconFlat from "../icons/LoadingIconFlat";
 import { random } from "../util/utillities";
-import usePeriod from "../hooks/usePeriod";
 
 const StorePairLayout = ({ codeConfirmed }) => {
     const [code, setCode] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [shake, setShake] = useState(0);
-    const shaking = usePeriod(shake, {}) && !!error;
 
     const verifyCode = () => {
         if (!code) return;
         
         setLoading(true);
+        
+        fetch("../../api/store_pair", {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            method: "POST",
+            body: JSON.stringify({ key: code })
+        })
+            .then((res) => {
+                res.json().then(result => {
+                    setLoading(false);
 
-        fetch("../../api/store_pair")
-            .then(res => {
-                setLoading(false);
-                let result = res?.json();
-                let apiKey = result?.value?.publicApiKey;
-                codeConfirmed(apiKey, !!apiKey);
-                if (!apiKey){ 
-                    setError("Invalid pairing code");
-                    setShake(random());
-                }
+                    let apiKey = result?.publicApiKey;
+
+                    if (!apiKey) console.log(result, "store pair error");
+
+                    codeConfirmed(apiKey, !!apiKey);
+                    
+                    if (!apiKey){ 
+                        setError("Invalid pairing code");
+                        setShake(random());
+                    }
+                });
             })
-            .then(res => console.log(res, "ramin"));
+            .then(res => console.log(res, "store pair error"));
     };
     
     return (
         <MainWrapper>
             <ContentContainer>
-                <InputWrapper className={ shaking ? ' shake ' : '' }>
-                    <Input 
-                        label="Please enter your pairing code" 
-                        $error={ error }
-                        getValue={ (value) => setCode(value) }
-                    ></Input>
-                </InputWrapper>
+                <Input 
+                    label="Please enter your pairing code" 
+                    shake={ shake }
+                    $error={ error }
+                    getValue={ (value) => setCode(value) }
+                ></Input>
                 <ButtonWrapper>
                     <Button 
                         variant="contained" 
@@ -50,6 +60,7 @@ const StorePairLayout = ({ codeConfirmed }) => {
                             padding: "0.5rem 1rem",
                             height: "2.5rem"
                         }}
+                        disabled={ !code }
                         onClick={ () => !loading && verifyCode() }
                     >
                         { loading ? <LoadingIconFlat /> : "Verify my pairing code!" }

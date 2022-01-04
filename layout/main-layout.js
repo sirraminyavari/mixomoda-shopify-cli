@@ -6,11 +6,13 @@ import TwitterIcon from '../icons/Twitter';
 import InstagramIcon from '../icons/Instagram';
 
 const MainLayout = ({ children }) => {
-  useEffect(() => {
-    fetch("../../api/store_pair")
-      .then(res => res.json())
-      .then(res => console.log(res, "ramin"));
-  }, []);
+    /*
+    useEffect(() => {
+        fetch("../../api/store_pair")
+        .then(res => res.json())
+        .then(res => console.log(res, "ramin"));
+    }, []);
+    */
 
   useEffect(() => {
     fetch("../../api/products")
