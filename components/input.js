@@ -2,7 +2,7 @@ import { TextField } from "@mui/material";
 import styled from 'styled-components';
 import usePeriod from "../hooks/usePeriod";
 
-const Input = ({ label, animated, getValue, shake, $error }) => {
+const Input = ({ label, animated, getValue, shake, $error, mini }) => {
     const shaking = usePeriod(shake, {}) && !!$error;
 
     return (

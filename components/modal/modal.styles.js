@@ -10,6 +10,7 @@ export const ContentSection = styled.div.attrs({ className: "border-radius-half"
   cursor: default;
   background-color: white;
   width: 70vw;
+  max-width: 40rem;
 `;
 
 export const MainContent = styled.div`

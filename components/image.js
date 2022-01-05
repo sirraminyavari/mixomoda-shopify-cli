@@ -1,9 +1,14 @@
+import { useState } from "react";
+
 const Image = ({ url, size = 3 }) => {
+    const [imgUrl, setImgUrl] = useState(url);
+
     return (
         <img 
             className="border-radius-quarter" 
-            src={ url }
-            style={{ cursor: "pointer", width: size + "rem", height: size + "rem" }} 
+            src={ imgUrl }
+            style={{ width: size + "rem", height: size + "rem" }} 
+            onError={ () => setImgUrl("../../image/oops.jpg") }
         />
     );
 };

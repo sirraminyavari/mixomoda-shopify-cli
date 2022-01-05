@@ -41,3 +41,5 @@ export const random = (min, max) => {
     var lnt = String(max).length;
     return (Number((Math.random() * Math.pow(10, lnt + 1)).toFixed(0)) % (max - min + 1)) + min;
 };
+
+export const isUrl = (str) => /(((https?)|(ftp)):\/\/[^\s<>]+)/ig.test(str);

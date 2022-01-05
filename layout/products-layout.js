@@ -1,17 +1,23 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
-import { MainWrapper, ProductsContainer, NoProduct, AddButton } from "../styles/products.styles";
+import { 
+  MainWrapper, 
+  ProductsContainer, 
+  NoProduct, 
+  AddButton
+} from "../styles/products.styles";
 import Product from "../components/product/product";
 import PlusIcon from "../icons/Plus";
 import LoadingIconFlat from "../icons/LoadingIconFlat";
 import Modal from "../components/modal/modal";
+import Toast from "../components/toast";
+import NewProduct from "../components/new-product/new-product";
 
 const testItem = {
   "rnd": "dfdf",
   "name": "Cloth1",  //OK
-  "price": 105,
-  "weight": 0.2,
   "url": "https://moclothing.com/product1", //OK
+  "price": 105, //OK
   "images": [
     "https://cdn.shopify.com/s/files/1/0489/4549/6226/products/Bildschirmfoto2021-10-21um16.34.55.png?v=1634826578",
     "https://cdn.shopify.com/s/files/1/0489/4549/6226/products/Bildschirmfoto2021-10-21um16.35.06.png?v=1634826578",
@@ -26,11 +32,15 @@ const ProductsLayout = ({ }) => {
   const [showAddModal, setShowAddModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const addProduct = (product) => setProducts(products.concat(product));
+  const addProduct = (product) => { 
+    setShowAddModal(false);
 
-  const errorOccurred = (err) => {
-    alert(err)
-  }; 
+    if (products.some(p => !p._id && (p.name.toLowerCase() === product.name.toLowerCase())))
+      setProducts(products.map(p => !p._id && (p.name.toLowerCase() === product.name.toLowerCase()) ? product : p));
+    else setProducts(products.concat(product)); 
+  }
+
+  const errorOccurred = (err) => Toast({ type: 'error', message: err }); 
 
   const submitProducts = () => {
     setLoading(true);
@@ -54,7 +64,7 @@ const ProductsLayout = ({ }) => {
         if (!resultProducts.length) {
           return errorOccurred("Something went wrong!");
         }
-        
+
         let arr = products.map(p => {
           let newP = resultProducts.filter(x => x.name.toLowerCase() === p.name.toLowerCase());
           return !p._id && newP.length ? newP[0] : null;
@@ -65,6 +75,8 @@ const ProductsLayout = ({ }) => {
         }));
 
         setProducts(arr.concat(newArr));
+
+        Toast({ type: 'success', message: "Product(s) submitted successfully!" });
       });
     })
     .catch(error => { 
@@ -105,9 +117,10 @@ const ProductsLayout = ({ }) => {
         onClose={ () => setShowAddModal(false) }
         title="Product Information"
       >
-        <div>
-          ramin yavari
-        </div>
+        <NewProduct 
+          onOk={ (newProduct) => addProduct(newProduct) }
+          onCancel={ () => setShowAddModal(false) }
+        />
       </Modal>
     </MainWrapper>
   );

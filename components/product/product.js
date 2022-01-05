@@ -40,8 +40,8 @@ const Product = (props) => {
                     <div style={{ flex: "1 1 auto" }} />
                     <div style={{ flex: "0 0 auto", display: "flex", flexFlow: "row" }}>
                         <div style={{ flex: "1 1 auto", display: "flex", flexFlow: "column", paddingInlineStart: "1rem" }}>
-                            <div style={{ flex: "1 1 auto;" }} />
-                            <div style={{ flex: "0 0 auto;", display: "flex", alignItems: "top", paddingBottom: "0.2rem" }}>
+                            <div style={{ flex: "1 1 auto" }} />
+                            <div style={{ flex: "0 0 auto", display: "flex", alignItems: "top", paddingBottom: "0.2rem" }}>
                                 <Price price={ price } />
                             </div>
                         </div>
