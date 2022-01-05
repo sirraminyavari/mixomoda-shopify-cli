@@ -9,6 +9,8 @@ import Modal from "../components/modal/modal";
 const testItem = {
   "rnd": "dfdf",
   "name": "Cloth1",  //OK
+  "price": 105,
+  "weight": 0.2,
   "url": "https://moclothing.com/product1", //OK
   "images": [
     "https://cdn.shopify.com/s/files/1/0489/4549/6226/products/Bildschirmfoto2021-10-21um16.34.55.png?v=1634826578",
@@ -52,13 +54,15 @@ const ProductsLayout = ({ }) => {
         if (!resultProducts.length) {
           return errorOccurred("Something went wrong!");
         }
-
+        
         let arr = products.map(p => {
           let newP = resultProducts.filter(x => x.name.toLowerCase() === p.name.toLowerCase());
-          return newP.length ? newP[0] : null;
+          return !p._id && newP.length ? newP[0] : null;
         });
 
-        let newArr = resultProducts.filter(p => !products.some(x => x.name.toLowerCase() === p.name.toLowerCase()));
+        let newArr = resultProducts.filter(p => !arr.some(x => { 
+          return (x._id === p._id) || (!x._id && (x.name.toLowerCase() === p.name.toLowerCase()));
+        }));
 
         setProducts(arr.concat(newArr));
       });

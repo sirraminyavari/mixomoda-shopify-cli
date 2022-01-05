@@ -21,7 +21,7 @@ export const Title = styled.div`
 
 export const StyledA = styled.a.attrs(({ url }) => ({ href: url, target: "_blank" }))`
     text-decoration: none;
-    color: black;
+    color: rgb(60, 60, 60);
 
     :hover {
         color: blue;
@@ -33,4 +33,7 @@ export const SubmittedStatus = styled.div`
     font-style: italic; 
     font-size: 0.7rem; 
     color: ${ ({ submitted }) => submitted ? "green" : "rgb(100, 100, 100)" };
+
+    display: flex;
+    align-items: top;
 `;
