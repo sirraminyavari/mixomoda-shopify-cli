@@ -1,8 +1,18 @@
 import styled from 'styled-components';
 
 export const TopBar = styled.div`
+    position: relative;
     flex: 0 0 auto;
     padding: 2rem 10vw 0 10vw;
+`;
+
+export const StoreIDContainer = styled.div`
+    position: absolute;
+    right: 10vw;
+    top: 0.5rem;
+    color: rgb(100, 100, 100);
+    font-size: 0.8rem;
+    font-style: italic;
 `;
 
 export const Content = styled.div`

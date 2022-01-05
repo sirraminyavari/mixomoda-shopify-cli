@@ -14,14 +14,16 @@ const StorePairLayout = ({ codeConfirmed }) => {
 
     useEffect(() => setError(''), [code]);
 
+    const errorOccurred = (err) => {
+        setError(err);
+        setShake(random());
+    };
+
     const verifyCode = () => {
         if (!code) return;
         
-        if (!/^[0-9A-F]{8}[-](?:[0-9A-F]{4}[-]){3}[0-9A-F]{12}$/ig.test(code)) {
-            setError("Pairing code must match 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'");
-            setShake(random());
-            return;
-        }
+        if (!/^[0-9A-Z]{8}[-](?:[0-9A-Z]{4}[-]){3}[0-9A-Z]{12}$/ig.test(code))
+            return errorOccurred("Pairing code must match 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'");
 
         setLoading(true);
         
@@ -33,23 +35,23 @@ const StorePairLayout = ({ codeConfirmed }) => {
             method: "POST",
             body: JSON.stringify({ key: code })
         })
-            .then((res) => {
-                res.json().then(result => {
-                    setLoading(false);
-
-                    let apiKey = result?.publicApiKey;
-
-                    if (!apiKey) console.log(result, "store pair error");
-
-                    codeConfirmed(apiKey, !!apiKey);
-                    
-                    if (!apiKey){ 
-                        setError("Invalid pairing code");
-                        setShake(random());
-                    }
-                });
-            })
-            .then(res => console.log(res, "store pair error"));
+        .then((res) => {
+            res.json().then(result => {
+                let apiKey = result?.publicApiKey;
+                
+                setLoading(false);
+                codeConfirmed(apiKey, !!apiKey);
+                
+                if (!apiKey) { 
+                    console.log(result, "store pair error");
+                    errorOccurred("Invalid pairing code");
+                }
+            });
+        })
+        .catch(error => {
+            console.log('error:', error); 
+            errorOccurred("Something went wrong. Please try again later!");
+        });
     };
 
     const { isMobile, isTablet } = DimensionHelper() || {};

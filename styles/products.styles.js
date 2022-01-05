@@ -1,3 +1,4 @@
+import { Button } from "@mui/material";
 import styled from 'styled-components';
 
 export const MainWrapper = styled.div`
@@ -7,23 +8,25 @@ export const MainWrapper = styled.div`
     height: 100%;
 `;
 
-export const ProductsContainer = styled.div.attrs({ className: "border-radius-half" })`
+export const ProductsContainer = styled.div.attrs({ className: "border-radius-quarter" })`
+    position: relative;
     padding: 1rem;
-    margin-bottom:1rem;
-    border: 1px rgb(150,150,150) solid;
-    background-color: rgb(240,240,240);
-`;
-
-export const Product = styled.div.attrs({ className: "border-radius-quarter shadow" })`
-    background-color: white;
-    padding: 0.5rem;
-
-    :hover {
-        background-color: rgb(250, 250, 250);
-    }
+    margin-bottom: 3rem;
+    background-color: rgb(246,246,247);
 `;
 
 export const NoProduct = styled.div`
     text-align: center;
     color: rgb(100, 100, 100);
+`;
+
+export const AddButton = styled(Button).attrs({ variant: "contained" })`
+    position: absolute;
+    bottom: -2.3rem;
+    right: 0.3rem;
+    min-width: 2rem !important;
+    width: 2rem;
+    height: 2rem;
+    padding: 0.1rem;
+    border-radius: 10rem;
 `;

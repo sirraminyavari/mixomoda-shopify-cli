@@ -1,54 +1,101 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
-import { MainWrapper, ProductsContainer, Product, NoProduct } from "../styles/products.styles";
+import { MainWrapper, ProductsContainer, NoProduct, AddButton } from "../styles/products.styles";
+import Product from "../components/product/product";
 import PlusIcon from "../icons/Plus";
+import LoadingIconFlat from "../icons/LoadingIconFlat";
 import Modal from "../components/modal/modal";
 
 const testItem = {
-  "_id": "123",
-  "name": "Cloth1",
-  "url": "https://moclothing.com/product1",
+  "rnd": "dfdf",
+  "name": "Cloth1",  //OK
+  "url": "https://moclothing.com/product1", //OK
   "images": [
     "https://cdn.shopify.com/s/files/1/0489/4549/6226/products/Bildschirmfoto2021-10-21um16.34.55.png?v=1634826578",
     "https://cdn.shopify.com/s/files/1/0489/4549/6226/products/Bildschirmfoto2021-10-21um16.35.06.png?v=1634826578",
     "https://cdn.shopify.com/s/files/1/0489/4549/6226/products/Bildschirmfoto2021-10-21um16.34.42.png?v=1634826578"
   ],
-  "image": "https://cdn.shopify.com/s/files/1/0489/4549/6226/products/Bildschirmfoto2021-10-21um16.34.55.png?v=1634826578",
-  "status": "active"
+  "image": "https://cdn.shopify.com/s/files/1/0489/4549/6226/products/Bildschirmfoto2021-10-21um16.34.55.png?v=1634826578", //OK
+  "status": "active" //OK
 };
 
 const ProductsLayout = ({ }) => {
   const [products, setProducts] = useState([testItem]);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const addProduct = (product) => setProducts(products.concat(product));
+
+  const errorOccurred = (err) => {
+    alert(err)
+  }; 
+
+  const submitProducts = () => {
+    setLoading(true);
+
+    const newProducts = products.filter(p => !p._id);
+    
+    fetch("../../api/products", {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify({ products: newProducts })
+    })
+    .then((res) => {
+      res.json().then(result => {
+        setLoading(false);
+
+        let resultProducts = (result || {}).products || [];
+        
+        if (!resultProducts.length) {
+          return errorOccurred("Something went wrong!");
+        }
+
+        let arr = products.map(p => {
+          let newP = resultProducts.filter(x => x.name.toLowerCase() === p.name.toLowerCase());
+          return newP.length ? newP[0] : null;
+        });
+
+        let newArr = resultProducts.filter(p => !products.some(x => x.name.toLowerCase() === p.name.toLowerCase()));
+
+        setProducts(arr.concat(newArr));
+      });
+    })
+    .catch(error => { 
+      console.log('error:', error); 
+      errorOccurred("Something went wrong!");
+    });
+  };
   
   return (
     <MainWrapper>
       <ProductsContainer>
+        <AddButton
+          onClick={ () => setShowAddModal(true) }
+        >
+          <PlusIcon />
+        </AddButton>
         {!products.length &&
-          <NoProduct>Your product list if empty!</NoProduct>
+          <NoProduct>Your product list is empty!</NoProduct>
         }
-        {
-          products.map(p => (
-            <Product key={ p._id }>
-              { p.name }
-            </Product>
-          ))
-        }
+        { products.map(p => <Product key={ p._id || p.rnd } { ...p } />) }
       </ProductsContainer>
-      <Button 
-        variant="contained" 
-        style={{ 
-            width: "16rem", 
-            padding: "0.5rem 1rem",
-            height: "2.5rem"
-        }}
-        onClick={ () => setShowAddModal(true) }
-      >
-        <PlusIcon style={{ marginInlineEnd: "0.5rem" }} />
-        Add Product
-      </Button>
+      <div style={{ textAlign: "center" }}>
+        <Button 
+          variant="contained" 
+          style={{ 
+              width: "16rem", 
+              padding: "0.5rem 1rem",
+              height: "2.5rem"
+          }}
+          disabled={ !products.filter(p => !p._id).length }
+          onClick={ () => submitProducts() }
+        >
+          { loading ? <LoadingIconFlat /> : "Submit All" }
+        </Button>
+      </div>
       <Modal
         open={ showAddModal }
         onClose={ () => setShowAddModal(false) }

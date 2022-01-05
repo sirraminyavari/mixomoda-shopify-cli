@@ -7,23 +7,23 @@ import { Box, Wrapper, GoBack } from "../styles/index.styles";
 import ArrowCircleLeftIcon from "../icons/ArrowCircleLeft";
 
 export default function Index() {
-  const [pairingCode, setPairingCode] = useState("12");
+  const [storeId, setStoreId] = useState("12");
   
   return (
-    <MainLayout>
+    <MainLayout storeId={ storeId }>
       <Wrapper>
         <TransitionGroup className="transition-group" style={{ flex: "1 1 auto;" }}>
-          <CSSTransition key={ pairingCode ? "this" : "that" } classNames="fade" timeout={ 1000 }>
-            { pairingCode ? 
+          <CSSTransition key={ storeId ? "this" : "that" } classNames="fade" timeout={ 1000 }>
+            { storeId ? 
               <Box>
-                <GoBack onClick={ () => setPairingCode(null) }>
+                <GoBack onClick={ () => setStoreId(null) }>
                   <ArrowCircleLeftIcon style={{ marginInlineEnd: "0.5rem" }} />
                   Go Back
                 </GoBack>
-                <ProductsLayout pairingCode={ pairingCode } />
+                <ProductsLayout storeId={ storeId } />
               </Box> : 
               <Box>
-                <StorePairLayout codeConfirmed={ (code) => setPairingCode(code) } />
+                <StorePairLayout codeConfirmed={ (code) => setStoreId(code) } />
               </Box>
             }
           </CSSTransition>
