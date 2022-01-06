@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styled from 'styled-components';
-import Input from "../Input";
+import ImageInput from "../ImageInput";
 
 const ImageList = ({ images }) => {
     const [imageUrls, setImageUrls] = useState(images || []);
@@ -12,13 +12,15 @@ const ImageList = ({ images }) => {
     
     return (
         <Wrapper>
+            <WrapperTitle>{ "Other images" }</WrapperTitle>
             {
                 imageUrls.map((url, index) => (
-                    <Input 
+                    <ImageInput 
                         key={ index }
+                        label={ `Image URL ${ index + 1 }`  }
                         onChange={ (value) => handleChange(value, index) }
                         initialValue={ url }
-                        mini={ true }
+                        unstyled={ true }
                     />
                 ))
             }
@@ -33,6 +35,17 @@ const Wrapper = styled.div.attrs({ className: "border-radius-quarter" })`
     position: relative;
     padding: 1rem;
     padding-bottom: 0;
-    margin-bottom: 3rem;
+    margin-top: 0.5rem;
     background-color: rgb(246,246,247);
+    position: relative;
+`;
+
+const WrapperTitle = styled.div.attrs({ className: "border-radius-quarter" })`
+    position: absolute;
+    left: 0.5rem;
+    top: -0.7rem;
+    font-size: 0.7rem;
+    color: rgb(80, 80, 80);
+    background-color: white;
+    padding: 0.2rem 0.4rem;
 `;

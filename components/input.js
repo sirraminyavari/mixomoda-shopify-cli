@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { TextField } from "@mui/material";
+import { InputUnstyled } from "@mui/material";
 import styled from 'styled-components';
 import usePeriod from "../hooks/usePeriod";
 
-const Input = ({ label, onChange, shake, $error, onBlur, mini }) => {
+const Input = ({ label, onChange, shake, $error, onBlur, mini, unstyled }) => {
     const [value, setValue] = useState('');
     const shaking = usePeriod(shake, {}) && !!$error;
     
@@ -11,10 +12,12 @@ const Input = ({ label, onChange, shake, $error, onBlur, mini }) => {
         setValue(e.target.value);
         onChange(e.target.value);
     };
+    
+    const SelectedInput = unstyled ? InputUnstyled : TextField;
 
     return (
         <InputWrapper className={ shaking ? ' shake ' : '' } mini={ mini }>
-            <TextField 
+            <SelectedInput 
                 variant="outlined" 
                 error={ !!$error }
                 value={ value }

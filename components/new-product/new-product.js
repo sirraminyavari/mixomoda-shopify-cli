@@ -5,6 +5,7 @@ import {
     StyledButton
 } from "./new-product.styles";
 import Input from "../Input";
+import ImageInput from "../ImageInput";
 import ImageList from "./image-list";
 import { random, isUrl } from "../../util/utillities";
 
@@ -68,15 +69,14 @@ const NewProduct = ({ onOk, onCancel, ...props }) => {
                 onBlur={ () => { if (!isUrl(url)) setUrlError("URL is not valid"); } }
                 mini={ true }
             ></Input>
-            <Input 
+            <ImageInput 
                 label="Image URL" 
                 shake={ shake }
                 $error={ imageError }
                 initialValue={ initialImageUrl }
                 onChange={ (value) => setImage((value || " ").trim()) }
                 onBlur={ () => { if (!isUrl(image)) setImageError("Image URL is not valid"); } }
-                mini={ true }
-            ></Input>
+            ></ImageInput>
             <ImageList />
             <ButtonsContainer>
                 <StyledButton disabled={ okButtonDisabled } onClick={ handleOk } variant="contained">OK</StyledButton>
