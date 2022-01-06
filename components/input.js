@@ -31,7 +31,7 @@ const CustomInput = React.forwardRef(function CustomInput({ label, ...props }, r
     );
 });
 
-const Input = ({ label, initialValue, onChange, shake, $error, onBlur, mini, unstyled }) => {
+const Input = ({ label, initialValue, onChange, shake, $error, onBlur, mini, unstyled, required, isNumber }) => {
     const [value, setValue] = useState(initialValue);
     const shaking = usePeriod(shake, {}) && !!$error;
 
@@ -44,19 +44,24 @@ const Input = ({ label, initialValue, onChange, shake, $error, onBlur, mini, uns
     
     const SelectedInput = unstyled ? CustomInput : TextField;
     
+    const inputProps = { 
+        variant: "outlined",
+        error: !!$error,
+        value: isNumber ? ((Number(value) < 0) || isNaN(value) ? 0 : value) : (value || " ").trim(),
+        label: label,
+        style: { width: "100%" },
+        onChange: handleChange,
+        onBlur: onBlur,
+        size: mini ? "small" : "normal",
+        required: !!required
+    };
+
+    if (!mini) inputProps.helperText = $error;
+    if (isNumber) inputProps.type = "number";
+    
     return (
         <InputWrapper className={ shaking ? ' shake ' : '' } mini={ mini }>
-            <SelectedInput 
-                variant="outlined" 
-                error={ !!$error }
-                value={ value }
-                label={ label }
-                style={{ width: "100%" }}
-                onChange={ handleChange  }
-                onBlur={ onBlur }
-                helperText={ mini ? "" : $error }
-                size={ mini ? "small" : "normal" }
-            />
+            <SelectedInput { ...inputProps } />
         </InputWrapper>
     );
 };

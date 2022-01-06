@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import Input from "../components/Input";
-import { MainWrapper, ImageContainer, ContentContainer, InputWrapper, ButtonWrapper } from "../styles/store-pair.styles";
+import { MainWrapper, ImageContainer, ContentContainer, InputWrapper, ButtonWrapper, RandomContainer, RandomTitle } from "../styles/store-pair.styles";
 import LoadingIconFlat from "../icons/LoadingIconFlat";
 import { random } from "../util/utillities";
 import DimensionHelper from "../util/dimensionHelper";
@@ -20,10 +20,12 @@ const StorePairLayout = ({ codeConfirmed }) => {
     };
 
     const verifyCode = () => {
-        if (!code) return;
+        let theCode = (code || " ").trim();
+
+        if (!theCode) return;
         
-        const hasValidPattern = /^[0-9A-Z]{8}[-](?:[0-9A-Z]{4}[-]){3}[0-9A-Z]{12}$/ig.test(code);
-        const isGuid = /^[0-9A-F]{8}[-](?:[0-9A-F]{4}[-]){3}[0-9A-F]{12}$/ig.test(code);
+        const hasValidPattern = /^[0-9A-Z]{8}[-](?:[0-9A-Z]{4}[-]){3}[0-9A-Z]{12}$/ig.test(theCode);
+        const isGuid = /^[0-9A-F]{8}[-](?:[0-9A-F]{4}[-]){3}[0-9A-F]{12}$/ig.test(theCode);
 
         if (!hasValidPattern)
             return errorOccurred("Pairing code must match 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'");
@@ -38,7 +40,7 @@ const StorePairLayout = ({ codeConfirmed }) => {
               'Content-Type': 'application/json'
             },
             method: "POST",
-            body: JSON.stringify({ key: code })
+            body: JSON.stringify({ key: theCode })
         })
         .then((res) => {
             res.json().then(result => {
@@ -67,9 +69,10 @@ const StorePairLayout = ({ codeConfirmed }) => {
             <ContentContainer contentOnly={ contentOnly }>
                 <Input 
                     label="Please enter your pairing code" 
+                    initialValue={ code }
                     shake={ shake }
                     $error={ error }
-                    onChange={ (value) => setCode((value || " ").trim()) }
+                    onChange={ (value) => setCode(value) }
                 ></Input>
                 <ButtonWrapper>
                     <Button 
@@ -79,12 +82,17 @@ const StorePairLayout = ({ codeConfirmed }) => {
                             padding: "0.5rem 1rem",
                             height: "2.5rem"
                         }}
-                        disabled={ !code }
+                        disabled={ !(code || " ").trim() }
                         onClick={ () => !loading && verifyCode() }
                     >
                         { loading ? <LoadingIconFlat /> : "Verify my pairing code!" }
                     </Button>
                 </ButtonWrapper>
+                <RandomContainer>
+                    <RandomTitle onClick={ () => setCode("b6e52a50-46f0-11ec-8d0f-6f7d8db65af7") }>
+                        this code works!!
+                    </RandomTitle>
+                </RandomContainer>
             </ContentContainer>
             {!contentOnly &&
                 <ImageContainer>

@@ -21,7 +21,7 @@ const ProductsLayout = ({ }) => {
   const [modalData, setModalData] = useState({});
 
   const addProduct = (product) => { 
-    setShowAddModal(false);
+    handleModalClose();
 
     if (products.some(p => !p._id && (p.name.toLowerCase() === product.name.toLowerCase())))
       setProducts(products.map(p => !p._id && (p.name.toLowerCase() === product.name.toLowerCase()) ? product : p));
@@ -64,7 +64,7 @@ const ProductsLayout = ({ }) => {
 
         setProducts(arr.concat(newArr));
 
-        Toast({ type: 'success', message: "Product(s) synchronized successfully!" });
+        Toast({ type: 'success', message: "Product(s) synchronized!" });
       });
     })
     .catch(error => { 
@@ -98,6 +98,11 @@ const ProductsLayout = ({ }) => {
 
     setModalData(randomData);
   };
+
+  const handleModalClose = () => {
+    setShowAddModal(false);
+    setModalData({});
+  };
   
   return (
     <MainWrapper>
@@ -128,13 +133,13 @@ const ProductsLayout = ({ }) => {
       </div>
       <Modal
         open={ showAddModal }
-        onClose={ () => setShowAddModal(false) }
+        onClose={ handleModalClose }
         title="Product Information"
       >
         <NewProduct 
           data={ modalData }
           onOk={ (newProduct) => addProduct(newProduct) }
-          onCancel={ () => setShowAddModal(false) }
+          onCancel={ handleModalClose }
           randomDataRequest={ handleRandomData }
         />
       </Modal>

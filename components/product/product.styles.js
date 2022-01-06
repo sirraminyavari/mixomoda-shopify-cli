@@ -7,6 +7,7 @@ export const ProductContainer = styled.div.attrs({ className: "border-radius-1 s
     padding-bottom: calc(1rem - 4px);
     color: rgb(32, 34, 35);
     margin-bottom: 1rem;
+    position: relative;
 `;
 
 export const TitleArea = styled.div`
@@ -37,4 +38,14 @@ export const SubmittedStatus = styled.div`
 
     display: flex;
     align-items: top;
+`;
+
+export const IDContainer = styled.div`
+    position: absolute;
+    bottom: 0.1rem;
+    left: calc(50% - 6rem);
+    right: calc(50% - 6rem);
+    font-size: 0.7rem;
+    text-align: center;
+    color: rgb(120, 120, 120);
 `;

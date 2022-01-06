@@ -4,12 +4,16 @@ import {
     RandomContainer,
     RandomTitle,
     ButtonsContainer,
-    StyledButton
+    StyledButton,
+    PriceContainer,
+    LeftColumn,
+    RightColumn
 } from "./new-product.styles";
 import Input from "../Input";
 import ImageInput from "../ImageInput";
 import ImageList from "./image-list";
-import { random, isUrl } from "../../util/utillities";
+import { random, isUrl, getType } from "../../util/utillities";
+import { Switch } from "@mui/material";
 
 const getImageUrl = data => (data.image || {}).inStoreUrl || data.image;
 const getImageList = data => (data.images || []).map(i => i.inStoreUrl || i);
@@ -58,13 +62,13 @@ const NewProduct = ({ data, onOk, onCancel, randomDataRequest, ...props }) => {
             rnd: random(),
             name: (name || " ").trim(),
             url: (url || " ").trim(),
-            price: price,
+            price: (getType(+price) === "number") && (+price > 0) ? +price : 0,
             status: status,
             image: (image || " ").trim(),
             images: imageList.map(i => (i || " ").trim()).filter(i => !!i)
         });
     };
-    
+    console.log(status, "ramin st");
     return (
         <Wrapper>
             <Input 
@@ -74,6 +78,7 @@ const NewProduct = ({ data, onOk, onCancel, randomDataRequest, ...props }) => {
                 initialValue={ name }
                 onChange={ (value) => setName(value) }
                 mini={ true }
+                required
             ></Input>
             <Input 
                 label="Product URL" 
@@ -83,12 +88,34 @@ const NewProduct = ({ data, onOk, onCancel, randomDataRequest, ...props }) => {
                 onChange={ (value) => setUrl(value) }
                 onBlur={ () => { if (!isUrl(url)) setUrlError("URL is not valid"); } }
                 mini={ true }
+                required
             ></Input>
+            <PriceContainer>
+                <LeftColumn>
+                    <Input 
+                        label="Price ($)" 
+                        initialValue={ price }
+                        onChange={ (value) => setPrice(value) }
+                        mini={ true }
+                        isNumber={ true }
+                    ></Input>
+                </LeftColumn>
+                <div style={{ flex: "1 1 auto" }} />
+                <RightColumn>
+                    <Switch 
+                        label="active" 
+                        checked={ status === "active" } 
+                        onChange={ (e) => setStatus(e.target.checked ? "active" : "inactive") }
+                    />
+                    <label style={{ color: "rgb(80, 80, 80)" }}>active</label>
+                </RightColumn>
+            </PriceContainer>
             <ImageInput 
                 label="Image URL" 
                 shake={ shake }
                 url={ getImageUrl(data) }
                 onChange={ (value) => setImage(value) }
+                required
             ></ImageInput>
             <ImageList 
                 images={ getImageList(data) } 

@@ -8,7 +8,7 @@ const trimmedUrl = (url) => (url || " ").trim();
 const isValidUrl = (url) => !!(trimmedUrl(url)) && isUrl(trimmedUrl(url));
 const getFinalUrl = (url) => isValidUrl(url) ? trimmedUrl(url) : '';
 
-const ImageInput = ({ url, onChange, onBlur, label, shake, unstyled }) => {
+const ImageInput = ({ url, onChange, onBlur, label, shake, unstyled, required }) => {
     const [imageUrl, setImageUrl] = useState(url);
     const [finalUrl, setFinalUrl] = useState(getFinalUrl(url));
     const [imageError, setImageError] = useState('');
@@ -43,6 +43,7 @@ const ImageInput = ({ url, onChange, onBlur, label, shake, unstyled }) => {
                     onBlur={ handleBlur }
                     mini={ true }
                     unstyled={ unstyled }
+                    required={ !!required }
                 />
             </InputContainer>
             { finalUrl &&

@@ -2,7 +2,7 @@ import { toast } from 'react-toastify';
 
 const InfoMessage = ({ message }) => {
     return (
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "340px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "270px" }}>
             <span style={{ flexGrow: 1, justifySelf: 'start', padding: '0.5rem' }}>{ message }</span>
         </div>
     );

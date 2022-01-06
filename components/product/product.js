@@ -3,7 +3,8 @@ import {
     TitleArea,
     Title,
     SubmittedStatus,
-    StyledA
+    StyledA,
+    IDContainer
 } from "./product.styles";
 import Image from "../image";
 import Chip from '@mui/material/Chip';
@@ -19,6 +20,11 @@ const Product = (props) => {
 
     return (
         <ProductContainer>
+            { !!_id &&
+                <div style={{ position: "absolute", bottom: 0, left: 0, right: 0 }}>
+                    <IDContainer>{ "ID: " + _id }</IDContainer>
+                </div>
+            }
             <TitleArea>
                 <div style={{ flex: "0 0 auto" }}>
                     <Image url={ (image || {}).inStoreUrl || image } size={ 6 } />

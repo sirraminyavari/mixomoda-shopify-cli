@@ -9,7 +9,7 @@ import { Box, Wrapper, GoBack } from "../styles/index.styles";
 import ArrowCircleLeftIcon from "../icons/ArrowCircleLeft";
 
 export default function Index() {
-  const [storeId, setStoreId] = useState("12");
+  const [storeId, setStoreId] = useState();
   
   return (
     <>

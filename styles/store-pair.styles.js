@@ -31,3 +31,19 @@ export const ButtonWrapper = styled.div`
     text-align: center;
     margin-top: 1rem;
 `;
+
+export const RandomContainer = styled.div`
+    margin: 1rem 0;
+    text-align: right;
+`;
+
+export const RandomTitle = styled.div`
+    display: inline-block;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: rgb(21, 101, 192);
+
+    :hover {
+        color: rgb(21, 101, 255);
+    }
+`;
