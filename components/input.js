@@ -1,18 +1,29 @@
+import { useState } from "react";
 import { TextField } from "@mui/material";
 import styled from 'styled-components';
 import usePeriod from "../hooks/usePeriod";
 
-const Input = ({ label, animated, getValue, shake, $error, mini }) => {
+const Input = ({ label, animated, onChange, shake, $error, onBlur }) => {
+    const [value, setValue] = useState('');
     const shaking = usePeriod(shake, {}) && !!$error;
+    
+    const handleChange = (e) => {
+        setValue(e.target.value);
+        getValue(e.target.value);
+    };
+
+    console.log(onBlur, "ramin");
 
     return (
         <InputWrapper className={ shaking ? ' shake ' : '' }>
             <TextField 
                 variant="outlined" 
                 error={ !!$error }
+                value={ value }
                 label={ label }
                 style={{ width: "100%" }}
-                onKeyUp={ (e) => getValue(e.target.value) }
+                onChange={ handleChange  }
+                onBlur={ onBlur }
                 helperText={ $error }
             />
         </InputWrapper>

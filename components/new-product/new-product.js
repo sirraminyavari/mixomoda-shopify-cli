@@ -16,7 +16,9 @@ const NewProduct = ({ onOk, onCancel, ...props }) => {
     const [urlError, setUrlError] = useState('');
     useEffect(() => setUrlError(''), [url]);
 
-    const [image, setImage] = useState((props.image || {}).inStoreUrl || props.image);
+    const initialImageUrl = (props.image || {}).inStoreUrl || props.image;
+
+    const [image, setImage] = useState(initialImageUrl);
     const [imageError, setImageError] = useState('');
     useEffect(() => setImageError(''), [image]);
 
@@ -52,23 +54,23 @@ const NewProduct = ({ onOk, onCancel, ...props }) => {
                 label="Product Name" 
                 shake={ shake }
                 $error={ nameError }
-                value={ name }
-                getValue={ (value) => setName(value) }
+                initialValue={ props.name }
+                onChange={ (value) => setName(value) }
             ></Input>
             <Input 
                 label="Product URL" 
                 shake={ shake }
                 $error={ urlError }
-                value={ url }
-                getValue={ (value) => setUrl(value) }
+                initialValue={ props.url }
+                onChange={ (value) => setUrl(value) }
                 onBlur={ () => { console.log(url, "ramin"); if (!isUrl(url)) setUrlError("URL is not valid"); } }
             ></Input>
             <Input 
                 label="Image URL" 
                 shake={ shake }
                 $error={ imageError }
-                value={ image }
-                getValue={ (value) => setImage(value) }
+                initialValue={ initialImageUrl }
+                onChange={ (value) => setImage(value) }
                 onBlur={ () => { if (!isUrl(image)) setImageError("Image URL is not valid"); } }
             ></Input>
             <ButtonsContainer>
