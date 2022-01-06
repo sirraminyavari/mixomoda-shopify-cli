@@ -2,13 +2,17 @@ import { useState } from "react";
 import styled from 'styled-components';
 import ImageInput from "../ImageInput";
 
-const ImageList = ({ images }) => {
+const ImageList = ({ images, onChange, shake }) => {
     const [imageUrls, setImageUrls] = useState(images || []);
 
     if (!imageUrls.some(u => !(u || " ").trim()))
         setImageUrls(imageUrls.concat(['']));
 
-    const handleChange = (value, index) => setImageUrls(imageUrls.map((i, ind) => ind === index ? value : i));
+    const handleChange = (value, index) => { 
+        const newUrls = imageUrls.map((i, ind) => ind === index ? value : i);
+        setImageUrls(newUrls);
+        onChange(newUrls.filter(u => !!u));
+    };
     
     return (
         <Wrapper>
@@ -18,8 +22,9 @@ const ImageList = ({ images }) => {
                     <ImageInput 
                         key={ index }
                         label={ `Image URL ${ index + 1 }`  }
-                        onChange={ (value) => handleChange(value, index) }
+                        shake={ shake }
                         initialValue={ url }
+                        onChange={ (value) => handleChange(value, index) }
                         unstyled={ true }
                     />
                 ))

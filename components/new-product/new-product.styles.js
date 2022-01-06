@@ -6,12 +6,26 @@ export const Wrapper = styled.div`
     flex-flow: column;
 `;
 
+export const RandomContainer = styled.div`
+    margin: 1rem 0;
+`;
+
+export const RandomTitle = styled.div`
+    text-align: right;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: rgb(21, 101, 192);
+
+    :hover {
+        color: rgb(21, 101, 255);
+    }
+`;
+
 export const ButtonsContainer = styled.div`
     display: flex;
     flex-flow: row;
     align-items: center;
     justify-content: center;
-    margin-top: 2rem;
 `;
 
 export const StyledButton = styled(Button)`

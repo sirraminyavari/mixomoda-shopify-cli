@@ -12,6 +12,7 @@ import LoadingIconFlat from "../icons/LoadingIconFlat";
 import Modal from "../components/modal/modal";
 import Toast from "../components/toast";
 import NewProduct from "../components/new-product/new-product";
+import { random, randomImageUrl } from "../util/utillities";
 
 const testItem = {
   "rnd": "dfdf",
@@ -31,6 +32,7 @@ const ProductsLayout = ({ }) => {
   const [products, setProducts] = useState([testItem]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [modalData, setModalData] = useState({});
 
   const addProduct = (product) => { 
     setShowAddModal(false);
@@ -84,6 +86,13 @@ const ProductsLayout = ({ }) => {
       errorOccurred("Something went wrong!");
     });
   };
+
+  const handleRandomData = () => {
+    setModalData({
+      image: randomImageUrl(),
+      images: [...Array(random(1, 5)).keys()].map(() => randomImageUrl())
+    });
+  };
   
   return (
     <MainWrapper>
@@ -118,8 +127,10 @@ const ProductsLayout = ({ }) => {
         title="Product Information"
       >
         <NewProduct 
+          data={ modalData }
           onOk={ (newProduct) => addProduct(newProduct) }
           onCancel={ () => setShowAddModal(false) }
+          randomDataRequest={ handleRandomData }
         />
       </Modal>
     </MainWrapper>
