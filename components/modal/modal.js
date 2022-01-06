@@ -6,7 +6,8 @@ const Modal = (props) => {
     const { open, onClose, title, children } = props;
 
     return (
-        <MaterialModal
+        <MaterialModal 
+            style={{ overflow: "auto" }}
             open={ open }>
             <ContentContainer>
                 <ContentSection onClick={(e) => e.stopPropagation()}>

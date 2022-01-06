@@ -13,7 +13,7 @@ const Input = ({ label, onChange, shake, $error, onBlur, mini }) => {
     };
 
     return (
-        <InputWrapper className={ shaking ? ' shake ' : '' }>
+        <InputWrapper className={ shaking ? ' shake ' : '' } mini={ mini }>
             <TextField 
                 variant="outlined" 
                 error={ !!$error }
@@ -33,5 +33,5 @@ export default Input;
 
 export const InputWrapper = styled.div.attrs(props => ({ className: props.className }))`
     flex: 0 0 auto;
-    height: 5rem;
+    height: ${ ({ mini }) => mini ? 4 : 5 }rem;
 `;
