@@ -90,7 +90,7 @@ const ProductsLayout = ({ }) => {
         name: "product number " + random(10000, 99999) + " model " + random(1, 100),
         url: "https://moclothing.com/product" + random(2, 5000),
         image: randomImageUrl(),
-        images: [...Array(random(1, 5)).keys()].map(() => randomImageUrl()),
+        images: [...Array(random(1, 3)).keys()].map(() => randomImageUrl()),
         price: random(10, 5000),
         status: random(1, 2) === 1 ? "active" : "inactive"
       };

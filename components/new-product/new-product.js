@@ -68,7 +68,7 @@ const NewProduct = ({ data, onOk, onCancel, randomDataRequest, ...props }) => {
             images: imageList.map(i => (i || " ").trim()).filter(i => !!i)
         });
     };
-    console.log(status, "ramin st");
+    
     return (
         <Wrapper>
             <Input 
@@ -118,7 +118,7 @@ const NewProduct = ({ data, onOk, onCancel, randomDataRequest, ...props }) => {
                 required
             ></ImageInput>
             <ImageList 
-                images={ getImageList(data) } 
+                images={ imageList } 
                 shake={ shake }
                 onChange={ (value) => setImageList(value) }
             />
