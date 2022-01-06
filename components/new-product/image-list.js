@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from 'styled-components';
 import ImageInput from "../ImageInput";
 
 const ImageList = ({ images, onChange, shake }) => {
     const [imageUrls, setImageUrls] = useState(images || []);
+
+    useEffect(() => setImageUrls(images || []), [images]);
 
     if (!imageUrls.some(u => !(u || " ").trim()))
         setImageUrls(imageUrls.concat(['']));
@@ -23,7 +25,7 @@ const ImageList = ({ images, onChange, shake }) => {
                         key={ index }
                         label={ `Image URL ${ index + 1 }`  }
                         shake={ shake }
-                        initialValue={ url }
+                        url={ url }
                         onChange={ (value) => handleChange(value, index) }
                         unstyled={ true }
                     />

@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TextField } from "@mui/material";
 import { InputUnstyled } from "@mui/base";
 import { styled as muiStyled } from "@mui/system";
@@ -31,9 +31,11 @@ const CustomInput = React.forwardRef(function CustomInput({ label, ...props }, r
     );
 });
 
-const Input = ({ label, onChange, shake, $error, onBlur, mini, unstyled }) => {
-    const [value, setValue] = useState('');
+const Input = ({ label, initialValue, onChange, shake, $error, onBlur, mini, unstyled }) => {
+    const [value, setValue] = useState(initialValue);
     const shaking = usePeriod(shake, {}) && !!$error;
+
+    useEffect(() => setValue(initialValue), [initialValue]);
     
     const handleChange = (e) => {
         setValue(e.target.value);
@@ -41,7 +43,7 @@ const Input = ({ label, onChange, shake, $error, onBlur, mini, unstyled }) => {
     };
     
     const SelectedInput = unstyled ? CustomInput : TextField;
-
+    console.log(initialValue, "ramin 22");
     return (
         <InputWrapper className={ shaking ? ' shake ' : '' } mini={ mini }>
             <SelectedInput 

@@ -13,11 +13,16 @@ const ImageInput = ({ url, onChange, onBlur, label, shake, unstyled }) => {
     const [finalUrl, setFinalUrl] = useState(getFinalUrl(url));
     const [imageError, setImageError] = useState('');
 
+    useEffect(() => { 
+        setImageUrl(url);
+        setFinalUrl(getFinalUrl(url));
+    }, [url]);
+
     useEffect(() => setImageError(''), [imageUrl]);
 
     const handleOnchange = (value) => {
         setImageUrl(value);
-        if (getType(onChange) === "function") onChange(trimmedUrl(value));
+        if (getType(onChange) === "function") onChange(value);
     };
 
     const handleBlur = () => {

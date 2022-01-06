@@ -32,7 +32,7 @@ const NewProduct = ({ data, onOk, onCancel, randomDataRequest, ...props }) => {
         setImage(getImageUrl(data));
         setImageList(getImageList(data));
     }, [data]);
-    console.log({dt: data, i: image, lst: imageList}, "ramin");
+    
     const [shake, setShake] = useState(false);
 
     const okButtonDisabled = !name || !url || !image;
@@ -66,7 +66,7 @@ const NewProduct = ({ data, onOk, onCancel, randomDataRequest, ...props }) => {
                 shake={ shake }
                 $error={ nameError }
                 initialValue={ props.name }
-                onChange={ (value) => setName((value || " ").trim()) }
+                onChange={ (value) => setName(value) }
                 mini={ true }
             ></Input>
             <Input 
@@ -74,14 +74,14 @@ const NewProduct = ({ data, onOk, onCancel, randomDataRequest, ...props }) => {
                 shake={ shake }
                 $error={ urlError }
                 initialValue={ props.url }
-                onChange={ (value) => setUrl((value || " ").trim()) }
+                onChange={ (value) => setUrl(value) }
                 onBlur={ () => { if (!isUrl(url)) setUrlError("URL is not valid"); } }
                 mini={ true }
             ></Input>
             <ImageInput 
                 label="Image URL" 
                 shake={ shake }
-                initialValue={ getImageUrl(data) }
+                url={ getImageUrl(data) }
                 onChange={ (value) => setImage(value) }
             ></ImageInput>
             <ImageList 
