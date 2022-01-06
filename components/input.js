@@ -2,7 +2,7 @@ import { TextField } from "@mui/material";
 import styled from 'styled-components';
 import usePeriod from "../hooks/usePeriod";
 
-const Input = ({ label, animated, getValue, shake, $error, ...props }) => {
+const Input = ({ label, animated, getValue, shake, $error, mini }) => {
     const shaking = usePeriod(shake, {}) && !!$error;
 
     return (
@@ -14,7 +14,6 @@ const Input = ({ label, animated, getValue, shake, $error, ...props }) => {
                 style={{ width: "100%" }}
                 onKeyUp={ (e) => getValue(e.target.value) }
                 helperText={ $error }
-                { ...props }
             />
         </InputWrapper>
     );
