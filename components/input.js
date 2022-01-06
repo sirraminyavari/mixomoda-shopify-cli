@@ -33,5 +33,5 @@ export default Input;
 
 export const InputWrapper = styled.div.attrs(props => ({ className: props.className }))`
     flex: 0 0 auto;
-    height: ${ ({ mini }) => mini ? 4 : 5 }rem;
+    height: ${ ({ mini }) => mini ? 3.5 : 5 }rem;
 `;
