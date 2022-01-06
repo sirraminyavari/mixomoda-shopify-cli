@@ -57,6 +57,7 @@ const NewProduct = ({ onOk, onCancel, ...props }) => {
                 $error={ nameError }
                 initialValue={ props.name }
                 onChange={ (value) => setName((value || " ").trim()) }
+                mini={ true }
             ></Input>
             <Input 
                 label="Product URL" 
@@ -65,6 +66,7 @@ const NewProduct = ({ onOk, onCancel, ...props }) => {
                 initialValue={ props.url }
                 onChange={ (value) => setUrl((value || " ").trim()) }
                 onBlur={ () => { if (!isUrl(url)) setUrlError("URL is not valid"); } }
+                mini={ true }
             ></Input>
             <Input 
                 label="Image URL" 
@@ -73,6 +75,7 @@ const NewProduct = ({ onOk, onCancel, ...props }) => {
                 initialValue={ initialImageUrl }
                 onChange={ (value) => setImage((value || " ").trim()) }
                 onBlur={ () => { if (!isUrl(image)) setImageError("Image URL is not valid"); } }
+                mini={ true }
             ></Input>
             <ImageList />
             <ButtonsContainer>

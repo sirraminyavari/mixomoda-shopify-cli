@@ -3,7 +3,7 @@ import { TextField } from "@mui/material";
 import styled from 'styled-components';
 import usePeriod from "../hooks/usePeriod";
 
-const Input = ({ label, onChange, shake, $error, onBlur }) => {
+const Input = ({ label, onChange, shake, $error, onBlur, mini }) => {
     const [value, setValue] = useState('');
     const shaking = usePeriod(shake, {}) && !!$error;
     
@@ -22,8 +22,8 @@ const Input = ({ label, onChange, shake, $error, onBlur }) => {
                 style={{ width: "100%" }}
                 onChange={ handleChange  }
                 onBlur={ onBlur }
-                helperText={ $error }
-                size="small"
+                helperText={ mini ? "" : $error }
+                size={ mini ? "small" : "normal" }
             />
         </InputWrapper>
     );

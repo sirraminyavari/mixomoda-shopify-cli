@@ -17,6 +17,7 @@ const ImageList = ({ images }) => {
                         key={ index }
                         onChange={ (value) => handleChange(value, index) }
                         initialValue={ url }
+                        mini={ true }
                     />
                 ))
             }
