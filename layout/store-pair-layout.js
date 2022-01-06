@@ -22,8 +22,13 @@ const StorePairLayout = ({ codeConfirmed }) => {
     const verifyCode = () => {
         if (!code) return;
         
-        if (!/^[0-9A-Z]{8}[-](?:[0-9A-Z]{4}[-]){3}[0-9A-Z]{12}$/ig.test(code))
+        const hasValidPattern = /^[0-9A-Z]{8}[-](?:[0-9A-Z]{4}[-]){3}[0-9A-Z]{12}$/ig.test(code);
+        const isGuid = /^[0-9A-F]{8}[-](?:[0-9A-F]{4}[-]){3}[0-9A-F]{12}$/ig.test(code);
+
+        if (!hasValidPattern)
             return errorOccurred("Pairing code must match 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'");
+        else if (!isGuid)
+            return errorOccurred("Invalid pairing code");
 
         setLoading(true);
         
