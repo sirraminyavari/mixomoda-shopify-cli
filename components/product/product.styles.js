@@ -6,6 +6,7 @@ export const ProductContainer = styled.div.attrs({ className: "border-radius-1 s
     padding: 1rem;
     padding-bottom: calc(1rem - 4px);
     color: rgb(32, 34, 35);
+    margin-bottom: 1rem;
 `;
 
 export const TitleArea = styled.div`

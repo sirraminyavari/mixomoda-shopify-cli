@@ -43,6 +43,14 @@ body {
     -webkit-border-bottom-right-radius: 0;
 }
 
+.trim-vertical-margins > :first-child {
+    margin-top:0rem !important;
+}
+
+.trim-vertical-margins > :last-child {
+    margin-bottom:0rem !important;
+}
+
 
 .shake {
     transform-origin: center center;

@@ -43,7 +43,7 @@ const Input = ({ label, initialValue, onChange, shake, $error, onBlur, mini, uns
     };
     
     const SelectedInput = unstyled ? CustomInput : TextField;
-    console.log(initialValue, "ramin 22");
+    
     return (
         <InputWrapper className={ shaking ? ' shake ' : '' } mini={ mini }>
             <SelectedInput 

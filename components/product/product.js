@@ -29,8 +29,10 @@ const Product = (props) => {
                             <Title>
                                 <StyledA url={ url }>{ name }</StyledA>
                             </Title>
-                            <Chip label={ status } color={ status === "active" ? "success" : "error" }
-                                style={{ padding: 0, fontSize: "0.7rem", height: "1.5rem" }} />
+                            { status && 
+                                <Chip label={ status } color={ status === "active" ? "success" : "error" }
+                                    style={{ padding: 0, fontSize: "0.7rem", height: "1.5rem" }} />
+                            }
                         </div>
                         <SubmittedStatus submitted={ !!_id }>
                             { !_id ? "not submitted" : "submitted" }
@@ -42,7 +44,7 @@ const Product = (props) => {
                         <div style={{ flex: "1 1 auto", display: "flex", flexFlow: "column", paddingInlineStart: "1rem" }}>
                             <div style={{ flex: "1 1 auto" }} />
                             <div style={{ flex: "0 0 auto", display: "flex", alignItems: "top", paddingBottom: "0.2rem" }}>
-                                <Price price={ price } />
+                                { price && (price > 0) && <Price price={ price } /> }
                             </div>
                         </div>
                         { !isMobile &&

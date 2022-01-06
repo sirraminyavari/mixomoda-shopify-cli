@@ -9,7 +9,7 @@ import {
 import Input from "../Input";
 import ImageInput from "../ImageInput";
 import ImageList from "./image-list";
-import { random, isUrl, randomImageUrl } from "../../util/utillities";
+import { random, isUrl } from "../../util/utillities";
 
 const getImageUrl = data => (data.image || {}).inStoreUrl || data.image;
 const getImageList = data => (data.images || []).map(i => i.inStoreUrl || i);
@@ -23,24 +23,29 @@ const NewProduct = ({ data, onOk, onCancel, randomDataRequest, ...props }) => {
     const [urlError, setUrlError] = useState('');
     useEffect(() => setUrlError(''), [url]);
 
+    const [price, setPrice] = useState(data.price);
+    const [status, setStatus] = useState(data.status);
+
     const [image, setImage] = useState(getImageUrl(data));
     const [imageList, setImageList] = useState(getImageList(data));
-
+    
     useEffect(() => {
         setName(data.name);
         setUrl(data.url);
+        setPrice(data.price);
+        setStatus(data.status);
         setImage(getImageUrl(data));
         setImageList(getImageList(data));
     }, [data]);
     
     const [shake, setShake] = useState(false);
 
-    const okButtonDisabled = !name || !url || !image;
+    const okButtonDisabled = !(name || " ").trim() || !(url || " ").trim() || !(image || " ").trim();
 
     const handleOk = () => {
-        const isUrlValid = isUrl(url);
-        const isImageValid = isUrl(image);
-        const isImageListValid = !imageList.some(i => !isUrl(i));
+        const isUrlValid = isUrl((url || " ").trim());
+        const isImageValid = isUrl((image || " ").trim());
+        const isImageListValid = !imageList.some(i => !isUrl((i || " ").trim()));
 
         if (!isUrlValid || !isImageValid || !isImageListValid) {
             if (!isUrlValid) setUrlError("URL is not valid");
@@ -49,13 +54,14 @@ const NewProduct = ({ data, onOk, onCancel, randomDataRequest, ...props }) => {
         }
 
         onOk({
+            _id: data._id,
             rnd: random(),
-            name: name,
-            url: url,
-            prile: "",
-            status: "",
-            image: "",
-            images: ""
+            name: (name || " ").trim(),
+            url: (url || " ").trim(),
+            price: price,
+            status: status,
+            image: (image || " ").trim(),
+            images: imageList.map(i => (i || " ").trim()).filter(i => !!i)
         });
     };
     
@@ -65,7 +71,7 @@ const NewProduct = ({ data, onOk, onCancel, randomDataRequest, ...props }) => {
                 label="Product Name" 
                 shake={ shake }
                 $error={ nameError }
-                initialValue={ props.name }
+                initialValue={ name }
                 onChange={ (value) => setName(value) }
                 mini={ true }
             ></Input>
@@ -73,7 +79,7 @@ const NewProduct = ({ data, onOk, onCancel, randomDataRequest, ...props }) => {
                 label="Product URL" 
                 shake={ shake }
                 $error={ urlError }
-                initialValue={ props.url }
+                initialValue={ url }
                 onChange={ (value) => setUrl(value) }
                 onBlur={ () => { if (!isUrl(url)) setUrlError("URL is not valid"); } }
                 mini={ true }

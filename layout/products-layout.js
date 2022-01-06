@@ -14,22 +14,8 @@ import Toast from "../components/toast";
 import NewProduct from "../components/new-product/new-product";
 import { random, randomImageUrl } from "../util/utillities";
 
-const testItem = {
-  "rnd": "dfdf",
-  "name": "Cloth1",  //OK
-  "url": "https://moclothing.com/product1", //OK
-  "price": 105, //OK
-  "images": [
-    "https://cdn.shopify.com/s/files/1/0489/4549/6226/products/Bildschirmfoto2021-10-21um16.34.55.png?v=1634826578",
-    "https://cdn.shopify.com/s/files/1/0489/4549/6226/products/Bildschirmfoto2021-10-21um16.35.06.png?v=1634826578",
-    "https://cdn.shopify.com/s/files/1/0489/4549/6226/products/Bildschirmfoto2021-10-21um16.34.42.png?v=1634826578"
-  ],
-  "image": "https://cdn.shopify.com/s/files/1/0489/4549/6226/products/Bildschirmfoto2021-10-21um16.34.55.png?v=1634826578", //OK
-  "status": "active" //OK
-};
-
 const ProductsLayout = ({ }) => {
-  const [products, setProducts] = useState([testItem]);
+  const [products, setProducts] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [modalData, setModalData] = useState({});
@@ -69,7 +55,7 @@ const ProductsLayout = ({ }) => {
 
         let arr = products.map(p => {
           let newP = resultProducts.filter(x => x.name.toLowerCase() === p.name.toLowerCase());
-          return !p._id && newP.length ? newP[0] : null;
+          return !p._id && newP.length ? newP[0] : p;
         });
 
         let newArr = resultProducts.filter(p => !arr.some(x => { 
@@ -78,7 +64,7 @@ const ProductsLayout = ({ }) => {
 
         setProducts(arr.concat(newArr));
 
-        Toast({ type: 'success', message: "Product(s) submitted successfully!" });
+        Toast({ type: 'success', message: "Product(s) synchronized successfully!" });
       });
     })
     .catch(error => { 
@@ -88,10 +74,29 @@ const ProductsLayout = ({ }) => {
   };
 
   const handleRandomData = () => {
-    setModalData({
-      image: randomImageUrl(),
-      images: [...Array(random(1, 5)).keys()].map(() => randomImageUrl())
-    });
+    const randomData = !products.length ? 
+      {
+        name: "Cloth1",
+        url: "https://moclothing.com/product1",
+        image: "https://cdn.shopify.com/s/files/1/0489/4549/6226/products/Bildschirmfoto2021-10-21um16.34.55.png?v=1634826578",
+        images: [
+          "https://cdn.shopify.com/s/files/1/0489/4549/6226/products/Bildschirmfoto2021-10-21um16.34.55.png?v=1634826578",
+          "https://cdn.shopify.com/s/files/1/0489/4549/6226/products/Bildschirmfoto2021-10-21um16.35.06.png?v=1634826578",
+          "https://cdn.shopify.com/s/files/1/0489/4549/6226/products/Bildschirmfoto2021-10-21um16.34.42.png?v=1634826578"
+        ],
+        price: 105,
+        status: "active"
+      } : {
+        name: "product number " + random(10000, 99999) + " model " + random(1, 100),
+        url: "https://moclothing.com/product" + random(2, 5000),
+        image: randomImageUrl(),
+        images: [...Array(random(1, 5)).keys()].map(() => randomImageUrl()),
+        price: random(10, 5000),
+        status: random(1, 2) === 1 ? "active" : "inactive"
+      };
+
+
+    setModalData(randomData);
   };
   
   return (

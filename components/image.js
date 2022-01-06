@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Image = ({ url, size = 3 }) => {
     const [imgUrl, setImgUrl] = useState(url);
+
+    useEffect(() => setImgUrl(url), [url]);
 
     return (
         <img 

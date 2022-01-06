@@ -8,7 +8,7 @@ export const MainWrapper = styled.div`
     height: 100%;
 `;
 
-export const ProductsContainer = styled.div.attrs({ className: "border-radius-quarter" })`
+export const ProductsContainer = styled.div.attrs({ className: "border-radius-quarter trim-vertical-margins" })`
     position: relative;
     padding: 1rem;
     margin-bottom: 3rem;
