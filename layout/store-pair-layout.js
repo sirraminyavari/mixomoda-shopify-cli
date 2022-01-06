@@ -69,7 +69,7 @@ const StorePairLayout = ({ codeConfirmed }) => {
                     label="Please enter your pairing code" 
                     shake={ shake }
                     $error={ error }
-                    onChange={ (value) => setCode(value) }
+                    onChange={ (value) => setCode((value || " ").trim()) }
                 ></Input>
                 <ButtonWrapper>
                     <Button 

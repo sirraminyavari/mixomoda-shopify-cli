@@ -14,8 +14,7 @@ export const ButtonsContainer = styled.div`
     margin-top: 2rem;
 `;
 
-export const StyledButton = styled(Button)
-    .attrs(({ isMain }) => ({ variant: isMain ? "contained" : "outlined" }))`
+export const StyledButton = styled(Button)`
     width: 8rem; 
     padding: 0.5rem 1rem;
     height: 2.5rem;

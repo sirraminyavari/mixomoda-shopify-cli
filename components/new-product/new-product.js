@@ -5,6 +5,7 @@ import {
     StyledButton
 } from "./new-product.styles";
 import Input from "../Input";
+import ImageList from "./image-list";
 import { random, isUrl } from "../../util/utillities";
 
 const NewProduct = ({ onOk, onCancel, ...props }) => {
@@ -55,27 +56,28 @@ const NewProduct = ({ onOk, onCancel, ...props }) => {
                 shake={ shake }
                 $error={ nameError }
                 initialValue={ props.name }
-                onChange={ (value) => setName(value) }
+                onChange={ (value) => setName((value || " ").trim()) }
             ></Input>
             <Input 
                 label="Product URL" 
                 shake={ shake }
                 $error={ urlError }
                 initialValue={ props.url }
-                onChange={ (value) => setUrl(value) }
-                onBlur={ () => { console.log(url, "ramin"); if (!isUrl(url)) setUrlError("URL is not valid"); } }
+                onChange={ (value) => setUrl((value || " ").trim()) }
+                onBlur={ () => { if (!isUrl(url)) setUrlError("URL is not valid"); } }
             ></Input>
             <Input 
                 label="Image URL" 
                 shake={ shake }
                 $error={ imageError }
                 initialValue={ initialImageUrl }
-                onChange={ (value) => setImage(value) }
+                onChange={ (value) => setImage((value || " ").trim()) }
                 onBlur={ () => { if (!isUrl(image)) setImageError("Image URL is not valid"); } }
             ></Input>
+            <ImageList />
             <ButtonsContainer>
-                <StyledButton isMain disabled={ okButtonDisabled } onClick={ handleOk }>OK</StyledButton>
-                <StyledButton onClick={ onCancel }>Cancel</StyledButton>
+                <StyledButton disabled={ okButtonDisabled } onClick={ handleOk } variant="contained">OK</StyledButton>
+                <StyledButton onClick={ onCancel } variant="outlined">Cancel</StyledButton>
             </ButtonsContainer>
         </Wrapper>
     );

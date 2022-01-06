@@ -3,16 +3,14 @@ import { TextField } from "@mui/material";
 import styled from 'styled-components';
 import usePeriod from "../hooks/usePeriod";
 
-const Input = ({ label, animated, onChange, shake, $error, onBlur }) => {
+const Input = ({ label, onChange, shake, $error, onBlur }) => {
     const [value, setValue] = useState('');
     const shaking = usePeriod(shake, {}) && !!$error;
     
     const handleChange = (e) => {
         setValue(e.target.value);
-        getValue(e.target.value);
+        onChange(e.target.value);
     };
-
-    console.log(onBlur, "ramin");
 
     return (
         <InputWrapper className={ shaking ? ' shake ' : '' }>
@@ -25,6 +23,7 @@ const Input = ({ label, animated, onChange, shake, $error, onBlur }) => {
                 onChange={ handleChange  }
                 onBlur={ onBlur }
                 helperText={ $error }
+                size="small"
             />
         </InputWrapper>
     );

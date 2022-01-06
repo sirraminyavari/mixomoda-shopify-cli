@@ -61,14 +61,14 @@ const MainLayout = ({ storeId, children }) => {
                         }}>
                         <div 
                             style={{ 
-                                flex: "0 0 auto;",  
+                                flex: "0 0 auto",  
                                 display: "flex", 
                                 flexFlow: "column", 
                                 alignItems: "center", 
                                 justifyContent: "center"
                             }}><ProfileImage /></div>
-                        <div style={{ flex: "0 0 auto;", marginInlineStart: "0.5rem" }}>Ramin Yavari</div>
-                        <div style={{ flex: "0 0 auto;", marginInlineStart: "1rem" }}>
+                        <div style={{ flex: "0 0 auto", marginInlineStart: "0.5rem" }}>Ramin Yavari</div>
+                        <div style={{ flex: "0 0 auto", marginInlineStart: "1rem" }}>
                             <Button 
                                 variant="outlined" 
                                 style={{ fontSize: "0.7rem", padding: "0.2rem 0.5rem" }}
