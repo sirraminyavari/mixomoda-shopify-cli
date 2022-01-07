@@ -10,7 +10,7 @@ const Image = ({ url, size = 3 }) => {
             className="border-radius-quarter" 
             src={ imgUrl }
             style={{ width: size + "rem", height: size + "rem" }} 
-            onError={ () => setImgUrl("../../image/oops.jpg") }
+            onError={ () => setImgUrl("https://s3.ir-thr-at1.arvanstorage.com/rvbox/shopify/image/oops.jpg") }
         />
     );
 };

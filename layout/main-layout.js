@@ -34,7 +34,7 @@ const MainLayout = ({ storeId, children }) => {
 
             <TopBar>
                 { storeId &&
-                    <StoreIDContainer>Store ID: { storeId }</StoreIDContainer>
+                    <StoreIDContainer>Shop: { storeId }</StoreIDContainer>
                 }
                 <img src={ logoUrlBlack } style={{ width: "12rem" }} ></img>
             </TopBar>
@@ -72,7 +72,7 @@ const MainLayout = ({ storeId, children }) => {
                             <Button 
                                 variant="outlined" 
                                 style={{ fontSize: "0.7rem", padding: "0.2rem 0.5rem" }}
-                                onClick={ () => window.open("../../documents/ramin_yavari_cv.pdf") }>
+                                onClick={ () => window.open("https://s3.ir-thr-at1.arvanstorage.com/rvbox/shopify/documents/ramin_yavari_cv.pdf") }>
                                 CV
                                 <DownloadIcon style={{ marginInlineStart: "0.5rem" }} />
                             </Button>

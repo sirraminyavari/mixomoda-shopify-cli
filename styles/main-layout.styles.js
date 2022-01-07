@@ -67,7 +67,7 @@ export const IconWrapper = styled.div`
     }
 `;
 
-export const ProfileImage = styled.img.attrs({ src: "../../image/ramin_yavari.jpg" })`
+export const ProfileImage = styled.img.attrs({ src: "https://s3.ir-thr-at1.arvanstorage.com/rvbox/shopify/image/ramin_yavari.jpg" })`
     width: 1.5rem;
     height:1.5rem;
     border-radius: 10rem;

@@ -18,6 +18,7 @@ const ProductsLayout = ({ }) => {
   const [products, setProducts] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [getLoading, setGetLoading] = useState(false);
   const [modalData, setModalData] = useState({});
 
   const addProduct = (product) => { 
@@ -29,6 +30,21 @@ const ProductsLayout = ({ }) => {
   }
 
   const errorOccurred = (err) => Toast({ type: 'error', message: err }); 
+
+  const handleProductsResponse = (resultProducts) => {
+    let arr = products.map(p => {
+      let newP = resultProducts.filter(x => x.name.toLowerCase() === p.name.toLowerCase());
+      return !p._id && newP.length ? newP[0] : p;
+    });
+
+    let newArr = resultProducts.filter(p => !arr.some(x => { 
+      return (x._id === p._id) || (!x._id && (x.name.toLowerCase() === p.name.toLowerCase()));
+    }));
+
+    setProducts(arr.concat(newArr));
+
+    Toast({ type: 'success', message: "Product(s) synchronized!" });
+  };
 
   const submitProducts = () => {
     setLoading(true);
@@ -46,25 +62,36 @@ const ProductsLayout = ({ }) => {
     .then((res) => {
       res.json().then(result => {
         setLoading(false);
-
         let resultProducts = (result || {}).products || [];
-        
+
         if (!resultProducts.length) {
           return errorOccurred("Something went wrong!");
         }
 
-        let arr = products.map(p => {
-          let newP = resultProducts.filter(x => x.name.toLowerCase() === p.name.toLowerCase());
-          return !p._id && newP.length ? newP[0] : p;
-        });
+        handleProductsResponse(resultProducts);
+      });
+    })
+    .catch(error => { 
+      console.log('error:', error); 
+      errorOccurred("Something went wrong!");
+    });
+  };
 
-        let newArr = resultProducts.filter(p => !arr.some(x => { 
-          return (x._id === p._id) || (!x._id && (x.name.toLowerCase() === p.name.toLowerCase()));
-        }));
+  const getProducts = () => {
+    setGetLoading(true);
 
-        setProducts(arr.concat(newArr));
-
-        Toast({ type: 'success', message: "Product(s) synchronized!" });
+    fetch("../../api/get_products", {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST"
+    })
+    .then((res) => {
+      res.json().then(result => {
+        setGetLoading(false);
+        let resultProducts = (result || {}).products || [];
+        if (resultProducts.length) handleProductsResponse(resultProducts);
       });
     })
     .catch(error => { 
@@ -123,12 +150,25 @@ const ProductsLayout = ({ }) => {
           style={{ 
               width: "16rem", 
               padding: "0.5rem 1rem",
-              height: "2.5rem"
+              height: "2.5rem",
+              margin: "0 1rem"
           }}
           disabled={ !products.filter(p => !p._id).length }
           onClick={ () => submitProducts() }
         >
           { loading ? <LoadingIconFlat /> : "Submit All" }
+        </Button>
+        <Button 
+          variant="outlined" 
+          style={{ 
+              width: "16rem", 
+              padding: "0.5rem 1rem",
+              height: "2.5rem",
+              margin: "0 1rem"
+          }}
+          onClick={ () => getProducts() }
+        >
+          { getLoading ? <LoadingIconFlat /> : "Refresh" }
         </Button>
       </div>
       <Modal

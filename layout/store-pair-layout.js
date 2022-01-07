@@ -44,7 +44,8 @@ const StorePairLayout = ({ codeConfirmed }) => {
         })
         .then((res) => {
             res.json().then(result => {
-                let apiKey = result?.publicApiKey;
+                console.log(result, "ramin");
+                let apiKey = result?.shop;
                 
                 setLoading(false);
                 codeConfirmed(apiKey, !!apiKey);
@@ -89,7 +90,7 @@ const StorePairLayout = ({ codeConfirmed }) => {
                     </Button>
                 </ButtonWrapper>
                 <RandomContainer>
-                    <RandomTitle onClick={ () => setCode("b6e52a50-46f0-11ec-8d0f-6f7d8db65af7") }>
+                    <RandomTitle onClick={ () => setCode("64748531-fb4d-7f05-e1ba-33ed68fbe83d") }>
                         this code works!!
                     </RandomTitle>
                 </RandomContainer>
@@ -97,7 +98,7 @@ const StorePairLayout = ({ codeConfirmed }) => {
             {!contentOnly &&
                 <ImageContainer>
                     <div>
-                        <img src="../image/top-banner.jpg"
+                        <img src="https://s3.ir-thr-at1.arvanstorage.com/rvbox/shopify/image/top-banner.jpg"
                             style={{ width: "100%" }}
                         ></img>
                     </div>
